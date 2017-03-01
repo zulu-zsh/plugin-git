@@ -1,10 +1,16 @@
-# make sure we have a git-root
-if ! git-root &> /dev/null; then
-  print 'not in a git repository' >&2
-  return 1
-fi
+#!/usr/bin/env zsh
 
-# we are in a git repository. add parameters to .gitignore
-for file in "${@}"; do
-  print "${file}" >>! $(git-root)/.gitignore
-done
+function _git-ignore-add() {
+  # make sure we have a git-root
+  if ! git-root &> /dev/null; then
+    print 'not in a git repository' >&2
+    return 1
+  fi
+
+  # we are in a git repository. add parameters to .gitignore
+  for file in "${@}"; do
+    print "${file}" >>! $(git-root)/.gitignore
+  done
+}
+
+_git-ignore-add "$@"
